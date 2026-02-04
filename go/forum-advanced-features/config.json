@@ -1,8 +1,8 @@
 {
-    "google_client_id": "318260753924-otte3s4jau9gplea8mvgda6c1f33fpes.apps.googleusercontent.com",
-    "google_client_secret": "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",
-    "github_client_id": "Ov23liFUkfcDlHG6JDv6",
-    "github_client_secret": "5dbcc1907d9ce28b7dd8b3d24a4aef490900af5f",
+    "google_client_id": "google_client_id",
+    "google_client_secret": "google_client_secret",
+    "github_client_id": "github_client_id",
+    "github_client_secret": "github_client_secret",
     "app_url": "http://localhost:8080",
     "max_image_size" : 20971520,
 	"port"         : ":8080",
