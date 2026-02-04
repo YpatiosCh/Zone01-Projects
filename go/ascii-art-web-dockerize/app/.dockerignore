@@ -1,0 +1,10 @@
+# Ignore Markdown files
+*.md
+
+# Ignore Go test files
+*main_test.go
+
+# Ignore version control directories
+.git
+#
+.dockerignore

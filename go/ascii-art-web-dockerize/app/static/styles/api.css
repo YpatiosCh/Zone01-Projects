@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+#ascii-art-container {
+    font-family: monospace;
+    white-space: pre;
+    margin-top: 20px;
+    text-align: left;
+    background: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 80%;
+    margin: 0 auto;
+    overflow: auto;
+}

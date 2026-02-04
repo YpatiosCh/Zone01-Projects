@@ -1,0 +1,840 @@
+/* Variables */
+:root {
+    --primary-color: #1a1b1e;
+    --secondary-color: #292b2f;
+    --background-color: #141517;
+    --text-color: #e2e2e4;
+    --text-muted: #8e9297;
+    --border-color: #2f3136;
+    --accent-color: #4a4d52;
+    --hover-color: #36393f;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    --card-background: #1e2024;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    {{/* background-color: var(--primary-color); */}}
+    color: var(--text-color);
+    padding: 2rem;
+    position: relative;
+    border-bottom: 40px solid var(--background-color);
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+header h1 {
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.back-button {
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    color: var(--text-color);
+}
+
+/* Layout */
+.content-wrapper {
+    display: block;/* Changed from flex */
+}
+
+.main-content {
+    width: 100%;
+    {{/* padding-left: 80px; */}}
+}
+/* Artist Grid */
+.artist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.artist-card {
+    background: var(--card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    color: inherit;
+}
+
+.artist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-color);
+}
+
+.artist-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-content h2 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.creation-date, .first-album {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Filters Sidebar */
+.filters-sidebar {
+    width: 280px;
+    background: var(--card-background);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    position: fixed;
+    top: 0;
+    left: -300px;
+    height: 100vh;
+    transition: left 0.3s ease;
+    z-index: 999;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.filters-sidebar.active {
+    left: 0;
+}
+
+.filters-sidebar h2 {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filters-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+.filters-overlay.active {
+    display: block;
+}
+
+/* Scrollbar Styles */
+.filters-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filters-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.filters-sidebar:hover::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+}
+
+/* Filter Content */
+.filter-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
+}
+
+/* Scrollbar styles for filter content */
+.filter-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filter-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.filter-content::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+}
+
+.filter-toggle-btn {
+    background: var(--card-background);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;  /* for tooltip positioning */
+    height: fit-content;
+}
+
+.filter-toggle-btn:hover {
+    background: var(--hover-color);
+    color: var(--text-color);
+    transform: scale(1.05);
+    box-shadow: var(--shadow);
+}
+
+.filter-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.filter-toggle-btn .tooltip {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 10px;
+    background: var(--card-background);
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.filter-toggle-btn:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.filter-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filter-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.filter-section h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Dual Range Slider */
+.range-slider {
+    position: relative;
+    width: 100%;
+    height: 5px;
+    margin: 30px 0;
+}
+
+.range-slider input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background: none;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.slider-track {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text-color);
+    cursor: pointer;
+    pointer-events: auto;
+    border: 2px solid var(--accent-color);
+    margin-top: -6px;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text-color);
+    cursor: pointer;
+    pointer-events: auto;
+    border: 2px solid var(--accent-color);
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+    background: var(--accent-color);
+}
+
+input[type="range"]:active::-moz-range-thumb {
+    background: var(--accent-color);
+}
+
+.range-min {
+    z-index: 2;
+}
+
+.range-max {
+    z-index: 2;
+}
+
+.range-values {
+    text-align: center;
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+input[type="range"]:focus {
+    outline: none;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px var(--background-color), 0 0 0 5px var(--accent-color);
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 3px var(--background-color), 0 0 0 5px var(--accent-color);
+}
+
+/* Locations Filter */
+.locations-filter {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--primary-color);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
+}
+
+.locations-filter::-webkit-scrollbar {
+    width: 6px;
+}
+
+.locations-filter::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.locations-filter::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+}
+
+.country-section {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.country-section:last-child {
+    border-bottom: none;
+}
+
+.country-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    cursor: pointer;
+    background: var(--card-background);
+    transition: background-color 0.2s ease;
+}
+
+.country-header:hover {
+    background: var(--hover-color);
+}
+
+.arrow-icon {
+    width: 16px;
+    height: 16px;
+    fill: var(--text-muted);
+    transition: transform 0.2s ease;
+}
+
+.country-header.active .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.cities-container {
+    display: none;
+    padding: 0.5rem;
+    background: var(--primary-color);
+}
+
+.cities-container.active {
+    display: block;
+}
+
+.location-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.location-checkbox:hover {
+    background: var(--hover-color);
+}
+
+.location-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-color);
+}
+
+.location-checkbox span {
+    font-size: 0.9rem;
+}
+
+/* Filter Actions */
+.filter-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.reset-button {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background: var(--primary-color);
+    color: var(--text-muted);
+}
+
+.reset-button:hover {
+    background: var(--hover-color);
+    color: var(--text-color);
+}
+
+/* Artist Detail Page */
+.artist-detail {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.artist-info {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.left-column img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.band-info {
+    margin-top: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem;
+    background: var(--primary-color);
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.detail-item .label {
+    color: var(--text-muted);
+}
+
+.info-section h2 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.info-section h3 {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.members-list p {
+    padding: 0.8rem;
+    background: var(--primary-color);
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Concert Section */
+.concert-section {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.concert-section h3 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.concert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.concert-card {
+    background: var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.concert-card h4 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dates-list {
+    list-style: none;
+}
+
+.dates-list li {
+    padding: 0.5rem 0;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Error Page */
+.error-container {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--card-background);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    margin: 3rem auto;
+    border: 1px solid var(--border-color);
+}
+
+.error-container h2 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--hover-color);
+}
+
+
+/* Search styles */
+.search-container {
+    max-width: 800px;
+    {{/* margin: 2rem auto;
+    padding: 0 2rem; */}}
+}
+
+.search-box {
+    position: relative;
+    width: 350px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow);
+}
+
+.suggestions-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: var(--shadow);
+}
+
+.suggestion-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #ddd;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: #c56565;
+    cursor: pointer;
+}
+
+.suggestion-type {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+/* Add search box to index page */
+.index-search {
+    margin-bottom: 2rem;
+}
+
+.result-section {
+    margin: 2rem auto;
+    max-width: 1400px;
+    padding: 0 2rem;
+}
+
+.result-section h2 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.highlight-text {
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+}
+
+.search-results {
+    margin-top: 2rem;
+}
+
+.artist-card:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
+
+/* No Results Message */
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    background: var(--card-background);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.no-results p {
+    color: var(--text-muted);
+}
+
+.content-wrapper.with-sidebar {
+    margin-left: 300px; /* Width of the sidebar */
+    transition: margin-left 0.3s ease;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .filters-sidebar {
+        width: 300px; /* Sidebar width */
+        background: var(--card-background);
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        position: fixed; /* Fixed to the left */
+        top: 0;
+        left: -300px; /* Initially hidden */
+        height: 100vh;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    .filters-sidebar.active {
+        left: 0; /* Fully visible */
+    }     
+
+    .range-slider {
+        max-width: 100%;
+        margin: 20px 0;
+    }
+
+    .filter-section {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .locations-filter {
+        max-height: 300px;  /* Slightly smaller on mobile */
+    }
+
+    .cities-container.active {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0.3rem;
+        padding: 0.5rem;
+    }
+
+    .location-checkbox {
+        padding: 0.5rem;
+    }
+
+    /* Range values display adjustment */
+    .range-values {
+        margin-top: 5px;
+    }
+
+    /* Filter actions adjustment */
+    .filter-actions {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .artist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+
+    .artist-info {
+        grid-template-columns: 1fr;
+    }
+
+    .left-column {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    header {
+        padding: 1.5rem;
+    }
+
+    .back-button {
+        left: 1.5rem;
+    }
+
+    .artist-detail {
+        padding: 1rem;
+    }
+
+    .concert-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .cities-container.active {
+        grid-template-columns: 1fr; 
+    }
+}

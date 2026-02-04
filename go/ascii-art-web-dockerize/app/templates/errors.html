@@ -1,0 +1,16 @@
+<!-- templates/errors.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error {{.StatusCode}}</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    <link href="static/styles/errors.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Error {{.StatusCode}}</h1>
+        <p>{{.Message}}</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+/* General body and layout styling */
+body {
+    background-color: black;
+    color: #00ff00;
+    font-family: monospace;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    overflow: hidden; /* Prevent window-level scrolling */
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    padding: 20px;
+    gap: 20px;
+    overflow: hidden; /* Prevent scrollbars on the container */
+}
+
+/* Form container with background styling */
+.form-container {
+    width: 45%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    border: 3px solid #00ff00;
+    box-shadow: 0 0 8px #00ff00; /* Reduced shadow intensity */
+    height: fit-content;
+}
+
+/* Styling for form elements like labels, inputs, and buttons */
+label, input, button {
+    display: inline-block;
+    margin: 10px 0;
+    color: #00ff00;
+}
+
+/* Styling for the textarea with a scrollbar when content overflows */
+textarea {
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    color: #00ff00;
+    font-weight: bold;
+    border: 1px solid #00ff00;
+    font-size: 1.2em;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: both;
+    max-width: 100%;
+    max-height: 300px;
+    overflow: auto;
+    box-shadow: 0 0 5px #00ff00; /* Reduced shadow intensity */
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    background-color: black;
+    color: #00ff00;
+    font-weight: bold;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 1em;
+    transition: 0.4s ease-in-out;
+    box-shadow: 0 0 5px #00ff00; /* Reduced shadow intensity */
+}
+
+button:hover {
+    background-color: #00ff00;
+    color: black;
+    box-shadow: 0 0 10px #00ff00; /* Brighter on hover */
+}
+
+/* Styling for ASCII Art (preformatted text) container */
+.ascii-result-container {
+    width: 45%;
+    max-height: 80vh; /* Set a max height for the ASCII art container */
+    overflow: auto; /* Enable scrollbars if content overflows */
+}
+
+pre {
+    font-family: monospace;
+    white-space: pre; /* Ensures we respect line breaks and spaces */
+    background-color: #111;
+    padding: 20px;
+    color: #00ff00;
+    border-radius: 5px;
+    margin-top: 20px;
+    word-wrap: normal; /* Prevent word break */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 50vh; /* Limit the height of the `pre` element */
+}
+
+/* Link styling */
+a {
+    color: #00ff00;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for the return link */
+.return-link {
+    align-self: flex-start;
+    margin-bottom: 20px;
+}

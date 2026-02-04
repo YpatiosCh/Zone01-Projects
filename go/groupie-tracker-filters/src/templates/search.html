@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Groupie Tracker</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/javascripts/searchBar.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/" class="back-button">← Back</a>
+        <h1>Search Results</h1>
+    </header>
+    <div class="search-results">
+        {{if .Results.Artists}}
+        <div class="result-section">
+            <h2>Artists/Bands</h2>
+            <div class="artist-grid">
+                {{range .Results.Artists}}
+                <a href="/artist/{{.Artist.ID}}" class="artist-card">
+                    <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" loading="lazy">
+                    <div class="card-content">
+                        <h2>{{.Artist.Name}}</h2>
+                        <p class="creation-date">Since {{.Artist.CreationDate}}</p>
+                        <p class="first-album">First Album: {{.Artist.FirstAlbum}}</p>
+                    </div>
+                </a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{if .Results.Members}}
+        <div class="result-section">
+            <h2>Band Members</h2>
+            <div class="artist-grid">
+                {{range .Results.Members}}
+                <a href="/artist/{{.Artist.ID}}" class="artist-card">
+                    <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" loading="lazy">
+                    <div class="card-content">
+                        <h2>{{.Artist.Name}}</h2>
+                        <p class="highlight-text">Member: {{.Member}}</p>
+                        <p class="creation-date">Since {{.Artist.CreationDate}}</p>
+                    </div>
+                </a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{if .Results.Locations}}
+        <div class="result-section">
+            <h2>Locations</h2>
+            <div class="artist-grid">
+                {{range .Results.Locations}}
+                <a href="/artist/{{.Artist.ID}}" class="artist-card">
+                    <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" loading="lazy">
+                    <div class="card-content">
+                        <h2>{{.Artist.Name}}</h2>
+                        <p class="highlight-text">Location: {{.Location}}</p>
+                        <p class="creation-date">Since {{.Artist.CreationDate}}</p>
+                    </div>
+                </a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{if .Results.CreationDates}}
+        <div class="result-section">
+            <h2>Creation Dates</h2>
+            <div class="artist-grid">
+                {{range .Results.CreationDates}}
+                <a href="/artist/{{.Artist.ID}}" class="artist-card">
+                    <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" loading="lazy">
+                    <div class="card-content">
+                        <h2>{{.Artist.Name}}</h2>
+                        <p class="highlight-text">Created in {{.CreationDate}}</p>
+                    </div>
+                </a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{if .Results.FirstAlbums}}
+        <div class="result-section">
+            <h2>First Albums</h2>
+            <div class="artist-grid">
+                {{range .Results.FirstAlbums}}
+                <a href="/artist/{{.Artist.ID}}" class="artist-card">
+                    <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" loading="lazy">
+                    <div class="card-content">
+                        <h2>{{.Artist.Name}}</h2>
+                        <p class="highlight-text">First Album: {{.FirstAlbum}}</p>
+                        <p class="creation-date">Since {{.Artist.CreationDate}}</p>
+                    </div>
+                </a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{if not .Results.Artists}}
+        {{if not .Results.Members}}
+        {{if not .Results.Locations}}
+        {{if not .Results.CreationDates}}
+        {{if not .Results.FirstAlbums}}
+        <div class="no-results">
+            <p>No results found for "{{.Query}}"</p>
+        </div>
+        {{end}}
+        {{end}}
+        {{end}}
+        {{end}}
+        {{end}}
+    </div>
+</body>
+</html>

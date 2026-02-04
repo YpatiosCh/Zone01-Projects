@@ -1,0 +1,154 @@
+/* General body and container styling */
+body {
+    background-color: black;
+    color: #00ff00;
+    font-family: monospace;
+    margin: 0;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+/* Main container styling */
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    min-height: 800px;
+    padding: 20px;
+    margin: 40px auto;
+    gap: 20px;
+}
+
+/* Form styling with reduced glow */
+.form-container {
+    width: 45%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    border: 3px solid #00ff00;
+    box-shadow: 0 0 8px #00ff00; /* Reduced shadow intensity */
+    height: fit-content;
+}
+
+/* Neon text area with toned-down glow */
+textarea {
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    color: #00ff00;
+    font-weight: bold;
+    border: 1px solid #00ff00;
+    font-size: 1.2em;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: both;
+    max-width: 100%;
+    max-height: 300px;
+    overflow: auto;
+    box-shadow: 0 0 5px #00ff00; /* Reduced shadow intensity */
+}
+
+/* Subtle button with reduced glow and animation */
+button {
+    padding: 10px 20px;
+    background-color: black;
+    color: #00ff00;
+    font-weight: bold;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 1em;
+    transition: 0.4s ease-in-out;
+    box-shadow: 0 0 5px #00ff00; /* Reduced shadow intensity */
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #00ff00;
+    color: black;
+    box-shadow: 0 0 10px #00ff00; /* Brighter on hover */
+}
+
+/* ASCII background with glowing animation */
+/* ASCII background with animated pattern */
+/* ASCII background with animated text color */
+.ascii-background {
+    width: 45%;
+    background-color: black; /* Static black background */
+    white-space: pre;
+    font-size: 13px;
+    line-height: 1.2;
+    padding: 20px;
+    border-radius: 10px;
+    border: 3px solid #00ff00;
+    font-family: monospace;
+    height: fit-content;
+    min-width: 600px;
+    animation: textGlow 12s infinite alternate; /* Apply animation to text */
+    box-shadow: 0 0 8px #00ff00;
+}
+/* Animation for glowing text */
+/* Glowing effect for the typed letters */
+.glow-text {
+    color: #00ff00; /* Neon green glow */
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+}
+
+/* Keyframes for pulsing text color */
+@keyframes textGlow {
+    0% {
+        color: #fcf8f8; /* Green color at the start */
+    }
+    20% {
+        color: crimson;
+    }
+    40% {
+        color: rgb(143, 220, 20);
+    }
+    60% {
+        color: #320586; /* Slightly darker green for a glow effect */
+    }
+    80% {
+        color: #12b9e2; /* Slightly darker green for a glow effect */
+    }
+    100% {
+        color: #00ff00; /* Green color at the end */
+    }
+}
+
+/* Label, input, radio button styling */
+label, input, button {
+    display: inline-block;
+    margin: 10px 0;
+    color: #00ff00;
+}
+
+.radio-group label {
+    margin-right: 10px;
+}
+
+/* Links styling with neon effect */
+a {
+    color: #00ff00;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #00cc00;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+/* Adjusting general pre tag styling */
+pre {
+    font-family: monospace;
+    white-space: pre-wrap;
+    background-color: #111;
+    padding: 20px;
+    color: #00ff00;
+    border-radius: 5px;
+    margin-top: 20px;
+    box-shadow: 0 0 5px #00ff00;
+}

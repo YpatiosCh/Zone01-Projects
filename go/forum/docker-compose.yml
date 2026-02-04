@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  forum:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mount volume for persistent database storage
+      - forum_data:/app/data
+    environment:
+      - PORT=8080
+      - DB_PATH=/app/data/forum.db
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/" ]
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      interval: 30s
+
+volumes:
+  forum_data:
+    driver: local

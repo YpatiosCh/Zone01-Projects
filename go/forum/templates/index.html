@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/static/global.css">
+  <link rel="stylesheet" href="/static/components.css">
+  <link rel="stylesheet" href="/static/breakpoints.css">
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <div class="navbar__logo">
+          <a href="/">
+            <img src="/static/files/logo.svg" alt="Logo">
+          </a>
+        </div>
+        <div class="navbar__actions">
+          {{if .User}}
+          <a href="/profile" class="navbar__username">Welcome, {{.User.Username}}</a>
+          <a href="/create-post" class="btn">
+            <img src="/static/files/createPost.svg" alt="Create" class="btn__icon">
+            <span>POST</span>
+          </a>
+          <a href="/profile" class="btn">
+            <span>PROFILE</span>
+          </a>
+          <form action="/logout" method="POST" style="display: inline;">
+            <button type="submit" class="btn">LOG OUT</button>
+          </form>
+          {{else}}
+          <a href="/login" class="btn">LOG IN</a>
+          <a href="/signup" class="btn">SIGN UP</a>
+          {{end}}
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero__container">
+        <h1 class="hero__title">FORUM</h1>
+        <p class="hero__motto">Where Ideas Meet — Join Our Community of Thinkers.</p>
+      </div>
+    </section>
+
+    <section class="categories-section">
+      {{if .Categories}}
+      <div class="categories-grid">
+        <a href="/">
+          <div class="category-card">
+            <div class="category-card__icon">
+              <img src="/static/files/category.svg" alt="Category">
+            </div>
+            <h3 class="category-card__title">All</h3>
+          </div>
+        </a>
+        {{range .Categories}}
+        <a href="/categories/{{.ID}}/posts">
+          <div class="category-card">
+            <div class="category-card__icon">
+              <img src="/static/files/categories/{{.Name}}.svg" alt="{{.Name}}">
+            </div>
+            <h3 class="category-card__title">{{.Name}}</h3>
+          </div>
+        </a>
+        {{end}}
+      </div>
+      {{else}}
+      <div class="error-container category-error">
+        <div class="error-message">
+          <h3>No categories found</h3>
+        </div>
+      </div>
+      {{end}}
+    </section>
+
+    {{if or (gt (len .TopPosts) 0) (gt (len .NewPosts) 0)}}
+    <section class="posts-section">
+      <div class="posts-section__container">
+
+        <!-- Top Posts -->
+        <div class="posts-grid">
+          <h3 class="section-title">Top Posts</h3>
+          {{range .TopPosts}}
+            <div class="post-card">
+              <div class="post-card__header">
+                <div class="post-card__meta">
+                  <h4 class="post-card__author">Posted by: {{.Username}}</h4>
+                  <span class="post-card__time">Date: {{.CreatedAt.Format "02/01/2006 15:04"}}</span>
+                </div>
+                <div class="post-card__categories">
+                  {{range .Categories}}
+                  <a href="/categories/{{.ID}}/posts" class="category-tag">#{{.Name}}</a>
+                  {{end}}
+                </div>
+              </div>
+              <div class="post-card__content">
+              <a href="/posts/{{.ID}}" class="post-card__link">
+                <h3 class="post-card__title">{{.Title}}</h3>
+                <p class="post-card__text">{{.Content}}</p>
+              </a>
+              </div>
+              <div class="post-card__metrics">
+                {{if $.User}}
+                <div class="metric">
+                  <form class="like-form" data-post-id="{{.ID}}" data-action="like" action="/post/{{.ID}}/like" method="POST" style="display: inline;">
+                    <button type="submit" class="metric_btn">
+                      <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+                    </button>
+                  </form>
+                  <span class="metric__count" id="like-count-{{.ID}}">{{.Likes}}</span>
+                </div>
+                <div class="metric">
+                  <form class="like-form" data-post-id="{{.ID}}" data-action="dislike" action="/post/{{.ID}}/dislike" method="POST" style="display: inline;">
+                    <button type="submit" class="metric_btn">
+                      <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+                    </button>
+                  </form>
+                  <span class="metric__count" id="dislike-count-{{.ID}}">{{.Dislikes}}</span>
+                </div>
+                {{else}}
+                <div class="metric">
+                  <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+                  <span class="metric__count">{{.Likes}}</span>
+                </div>
+                <div class="metric">
+                  <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+                  <span class="metric__count">{{.Dislikes}}</span>
+                </div>
+                {{end}}
+                <div class="metric">
+                  <img src="/static/files/comment.svg" alt="Comments" class="metric__icon">
+                  <span class="metric__count">{{.Comments}}</span>
+                </div>
+              </div>
+            </div>
+          {{end}}
+        </div>
+
+        <!-- Latest Posts -->
+        <div class="posts-grid">
+          <h3 class="section-title">Latest Posts</h3>
+          {{range .NewPosts}}
+            <div class="post-card">
+              <div class="post-card__header">
+                <div class="post-card__meta">
+                  <h4 class="post-card__author">Posted by: {{.Username}}</h4>
+                  <span class="post-card__time">Date: {{.CreatedAt.Format "02/01/2006 15:04"}}</span>
+                </div>
+                <div class="post-card__categories">
+                  {{range .Categories}}
+                  <a href="/categories/{{.ID}}/posts" class="category-tag">#{{.Name}}</a>
+                  {{end}}
+                </div>
+              </div>
+              <div class="post-card__content">
+              <a href="/posts/{{.ID}}" class="post-card__link">
+                <h3 class="post-card__title">{{.Title}}</h3>
+                <p class="post-card__text">{{.Content}}</p>
+                </a>
+              </div>
+              <div class="post-card__metrics">
+                {{if $.User}}
+                <div class="metric">
+                  <form class="like-form" data-post-id="{{.ID}}" data-action="like" action="/post/{{.ID}}/like" method="POST" style="display: inline;">
+                    <button type="submit" class="metric_btn">
+                      <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+                    </button>
+                  </form>
+                  <span class="metric__count" id="like-count-{{.ID}}">{{.Likes}}</span>
+                </div>
+                <div class="metric">
+                  <form class="like-form" data-post-id="{{.ID}}" data-action="dislike" action="/post/{{.ID}}/dislike" method="POST" style="display: inline;">
+                    <button type="submit" class="metric_btn">
+                      <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+                    </button>
+                  </form>
+                  <span class="metric__count" id="dislike-count-{{.ID}}">{{.Dislikes}}</span>
+                </div>
+                {{else}}
+                <div class="metric">
+                  <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+                  <span class="metric__count">{{.Likes}}</span>
+                </div>
+                <div class="metric">
+                  <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+                  <span class="metric__count">{{.Dislikes}}</span>
+                </div>
+                {{end}}
+                <div class="metric">
+                  <img src="/static/files/comment.svg" alt="Comments" class="metric__icon">
+                  <span class="metric__count">{{.Comments}}</span>
+                </div>
+              </div>
+            </div>
+          {{end}}
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        {{if gt .TotalPages 1}}
+        <a href="?page={{subtract .Page 1}}" class="pagination-arrow">←</a>
+        {{end}}
+
+        {{range $i := sequence 1 .TotalPages}}
+        <a href="?page={{$i}}" class="pagination-number {{if eq $i $.Page}}active{{end}}">
+          {{$i}}
+        </a>
+        {{end}}
+
+        {{if lt .Page .TotalPages}}
+        <a href="?page={{add .Page 1}}" class="pagination-arrow">→</a>
+        {{end}}
+      </div>
+    </section>
+    {{else}}
+    <section class="posts-section">
+      <div class="error-container post-error">
+        <div class="error-message">
+          <h3>No posts found</h3>
+        </div>
+      </div>
+    </section>
+    {{end}}
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__content">
+      <p>Powered by Zone01Athens</p>
+    </div>
+  </footer>
+
+  <script src="/static/page.js"></script>
+</body>
+
+</html>

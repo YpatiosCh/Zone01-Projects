@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/static/global.css" />
+  <link rel="stylesheet" href="/static/components.css" />
+  <link rel="stylesheet" href="/static/breakpoints.css" />
+</head>
+
+<body>
+  {{if .User}}
+  <span id="loggedInUsername" style="display: none;">{{.User.Username}}</span>
+  {{end}}
+  <div class="page-wrapper">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <div class="navbar__logo">
+          <a href="/">
+            <img src="/static/files/logo.svg" alt="Logo" />
+          </a>
+        </div>
+        <div class="navbar__actions">
+          {{if .User}}
+          <a href="/notifications" class="btn--notification">
+            <img src="/static/files/notification.svg" alt="Notifications" class="notification__icon" />
+            {{if gt .Notifications 0}}
+            <span class="notification-count">{{.Notifications}}</span>
+            {{end}}
+          </a>
+          <a href="/create-post" class="btn">
+            <img src="/static/files/createPost.svg" alt="Create" class="btn__icon" />
+            <span>POST</span>
+          </a>
+          <a href="/profile/{{.User.Username}}" class="btn">
+            <span>PROFILE</span>
+          </a>
+          <form action="/logout" method="POST" style="display: inline">
+            <button type="submit" class="btn">LOG OUT</button>
+          </form>
+          {{else}}
+          <!-- Non-logged in user view -->
+          <a href="/login" class="btn">LOG IN</a>
+          <a href="/signup" class="btn">SIGN UP</a>
+          {{end}}
+        </div>
+      </div>
+    </nav>
+
+    {{with .ValidationErr}} {{if .}}
+    <div class="validation-error">{{.}}</div>
+    {{end}} {{end}}
+
+    <!-- Post Detail Section -->
+    <section class="post-detail-section">
+      <div class="post-detail__container">
+        <!-- Post Card -->
+        <div class="post-card--detail">
+          <div class="post-card__header">
+            <div class="post-card__meta">
+              <a href="/profile/{{.SinglePost.Username}}" style="text-decoration: none">
+                <h4 class="post-card__author">
+                  Posted by:
+                  <span style="font-weight: bold">{{.SinglePost.Username}}</span>
+                </h4>
+              </a>
+              <span class="post-card__time">{{.SinglePost.CreatedAt.Format "02/01/2006 15:04"}}</span>
+            </div>
+            <div class="post-card__categories">
+              {{range .SinglePost.Categories}}
+              <a href="/categories/{{.ID}}/posts" class="category-tag" style="display: inline">#{{.Name}}</a>
+              {{end}}
+            </div>
+            {{if and .User (eq .User.Username .SinglePost.Username)}}
+            <div class="post-actions">
+              <a href="/posts/{{.SinglePost.ID}}/edit" title="Edit Post">
+                <img src="/static/files/edit.svg" alt="Edit" class="edit__icon" />
+              </a>
+              <form action="/posts/{{$.SinglePost.ID}}/delete" method="POST" style="display: inline" class="delete__form">
+                <button type="button" class="delete__button" title="Delete Post">
+                  <img src="/static/files/bin.svg" alt="Delete" class="delete__icon" />
+                </button>
+              </form>
+            </div>
+            {{end}}
+          </div>
+          <div class="post-card__content">
+            <h2 class="post-card__title">{{.SinglePost.Title}}</h2>
+
+            {{if .SinglePost.HasImage}}
+            <div class="post-image-container">
+              <img src="/{{.SinglePost.Image}}" alt="Post image" class="post-image" />
+            </div>
+            {{end}}
+            <p class="post-page__text">{{.SinglePost.Content}}</p>
+          </div>
+          <div class="post-card__metrics">
+            {{if .User}}
+            <!-- Logged in: Show buttons -->
+            <div class="metric">
+              <form class="like-form" action="/post/{{.SinglePost.ID}}/like" method="POST" style="display: inline">
+                <button type="submit" class="metric_btn">
+                  <img
+                    src="{{if .SinglePost.IsLiked}}/static/files/active_like.svg{{else}}/static/files/like.svg{{end}}"
+                    alt="Likes" class="metric__icon" />
+                </button>
+              </form>
+              <span class="metric__count">{{.SinglePost.Likes}}</span>
+            </div>
+            <div class="metric">
+              <form class="like-form" action="/post/{{.SinglePost.ID}}/dislike" method="POST" style="display: inline">
+                <button type="submit" class="metric_btn">
+                  <img
+                    src="{{if .SinglePost.IsDisliked}}/static/files/active_dislike.svg{{else}}/static/files/dislike.svg{{end}}"
+                    alt="Dislikes" class="metric__icon" />
+                </button>
+              </form>
+              <span class="metric__count">{{.SinglePost.Dislikes}}</span>
+            </div>
+            {{else}}
+            <!-- Not logged in: Just show counts -->
+            <div class="metric">
+              <img src="/static/files/like.svg" alt="Likes" class="metric__icon" />
+              <span class="metric__count">{{.SinglePost.Likes}}</span>
+            </div>
+            <div class="metric">
+              <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon" />
+              <span class="metric__count">{{.SinglePost.Dislikes}}</span>
+            </div>
+            {{end}}
+          </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comment-form-section">
+          <h3 class="section-title">
+            Comments({{(len .SinglePost.Comments)}})
+          </h3>
+        </div>
+
+        {{if gt (len .SinglePost.Comments) 0}}
+        {{range .SinglePost.Comments}}
+        <div
+          class="comment-card {{if or (eq .ID $.CommentHighlight) (eq .Username $.UserHighlight)}}comment-card--highlighted{{end}}"
+          id="comment-{{.ID}}" data-username="{{.Username}}">
+          <div class="comment-card__header">
+            <div class="comment-card__meta">
+              <a href="/profile/{{.Username}}" style="text-decoration: none">
+                <h4 class="comment-card__author">{{.Username}}</h4>
+              </a>
+              <span class="comment-card__time">{{.CreatedAt.Format "02/01/2006 15:04"}}</span>
+            </div>
+            {{if and $.User (eq $.User.Username .Username)}}
+            <div class="comment-actions">
+              <button type="button" class="edit-btn" data-comment-id="{{.ID}}" data-current-content="{{.Content}}">
+                <img src="/static/files/edit.svg" alt="Edit" class="edit__icon" />
+              </button>
+              <form action="/comment/{{.ID}}/delete" method="POST" style="display: inline" class="delete__form">
+                <button type="button" class="delete__button" title="Delete Post">
+                  <img src="/static/files/bin.svg" alt="Delete" class="delete__icon" />
+                </button>
+              </form>
+            </div>
+            {{end}}
+          </div>
+          <div class="comment-card__content">
+            <p class="comment-card__text">{{.Content}}</p>
+          </div>
+          <div class="post-card__metrics">
+            {{if $.User}}
+            <div class="metric">
+              <form class="like-form" action="/comment/{{.ID}}/like" method="POST" style="display: inline">
+                <button type="submit" class="metric_btn">
+                  <img src="{{if .IsLiked}}/static/files/active_like.svg{{else}}/static/files/like.svg{{end}}"
+                    alt="Likes" class="metric__icon" />
+                </button>
+              </form>
+              <span class="metric__count">{{.Likes}}</span>
+            </div>
+            <div class="metric">
+              <form class="like-form" action="/comment/{{.ID}}/dislike" method="POST" style="display: inline">
+                <button type="submit" class="metric_btn">
+                  <img src="{{if .IsDisliked}}/static/files/active_dislike.svg{{else}}/static/files/dislike.svg{{end}}"
+                    alt="Dislikes" class="metric__icon" />
+                </button>
+              </form>
+              <span class="metric__count">{{.Dislikes}}</span>
+            </div>
+            {{else}}
+            <div class="metric">
+              <img src="/static/files/like.svg" alt="Likes" class="metric__icon" />
+              <span class="metric__count">{{.Likes}}</span>
+            </div>
+            <div class="metric">
+              <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon" />
+              <span class="metric__count">{{.Dislikes}}</span>
+            </div>
+            {{end}}
+          </div>
+        </div>
+        {{end}}
+        {{end}}
+<!-- Comment Form or Login Prompt -->
+{{if .User}}
+<div class="comment-form-section">
+  <h3 class="section-title">Add a Comment</h3>
+  <form action="/posts/{{.SinglePost.ID}}/comments" method="POST" class="comment-form">
+    <textarea name="content" class="comment-form__textarea" placeholder="Write your comment here..."
+      required></textarea>
+    <button type="submit" class="btn">SUBMIT</button>
+  </form>
+</div>
+{{else}}
+<div class="comment-form-section">
+  <h3 class="section-title">
+    Please <a href="/login">log in</a> to comment.
+  </h3>
+</div>
+{{end}}
+   <!-- Custom Delete Confirmation Modal -->
+   <div id="customConfirm" class="modal" style="display:none;">
+    <div class="modal-content">
+      <p>Are you sure you want to delete this post?</p>
+      <div class="button-group">
+        <button class="btn" id="confirmYes">Yes</button>
+        <button class="btn" id="confirmNo">No</button>
+      </div>
+    </div>
+  </div>
+      </div>
+    </section>
+  </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__content">
+        <p>Powered by Zone01Athens</p>
+      </div>
+    </footer>
+  <script src="/static/comment-update-form.js"></script>
+  <script src="/static/delete.js"></script>
+  <script src="/static/page.js"></script>
+  <script src="/static/autoscrol.js"></script>
+</body>
+
+</html>

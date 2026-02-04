@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ASCII Art Generator Result</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <link href="static/styles/result.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Return to Home Page Link -->
+    <a href="/" class="return-link">Return to Home Page</a>
+    
+    <div class="container">
+        <!-- ASCII Art Generator Form -->
+        <div class="form-container">
+            <h1>ASCII Art Generator</h1>
+            <form action="/ascii-art" method="post">
+                <label for="text">Enter text:</label>
+                <textarea id="text" name="text" required placeholder="Type your text here..."></textarea>
+                
+                <p>Select banner style:</p>
+                <div class="radio-group">
+                    <input type="radio" id="standard" name="banner" value="standard" required>
+                    <label for="standard">Standard</label>
+
+                    <input type="radio" id="shadow" name="banner" value="shadow">
+                    <label for="shadow">Shadow</label>
+
+                    <input type="radio" id="thinkertoy" name="banner" value="thinkertoy">
+                    <label for="thinkertoy">Thinkertoy</label>
+                </div>
+
+                <label for="color">Choose text color:</label>
+                <input type="color" id="color" name="color" value="#000000">
+
+                <button type="submit">Generate</button>
+            </form>
+        </div>
+
+        <!-- Display ASCII Art Result with Dynamic Background Color -->
+        <div class="ascii-result-container">
+            <h2>Generated ASCII Art:</h2>
+            <pre class="ascii-art" style="color: {{.Color}}; background-color: {{.BackgroundColor}};">{{.AsciiArt}}</pre>
+        </div>
+    </div>
+</body>
+</html>

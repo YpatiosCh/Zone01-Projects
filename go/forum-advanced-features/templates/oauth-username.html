@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/static/global.css">
+  <link rel="stylesheet" href="/static/components.css">
+  <link rel="stylesheet" href="/static/breakpoints.css">
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <div class="navbar__logo">
+          <a href="/">
+            <img src="/static/files/logo.svg" alt="Logo">
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    {{if .ValidationErr}}
+    <div class="validation-error">
+      {{.ValidationErr}}
+    </div>
+    {{end}}
+
+    <!-- Username Selection Section -->
+    <section class="login-section">
+      <div class="login-container">
+        <h1 class="login-title">Choose Your Username</h1>
+        
+        <div class="oauth-info">
+          <p>You're signing in with <strong>{{.Provider}}</strong> as:</p>
+          <div class="user-info">
+          {{if .Name}}
+            <strong>{{.Name}}</strong><br>
+          {{else}}
+            <span>{{.Email}}</span>
+          {{end}}
+          </div>
+        </div>
+
+        <form class="login-form" method="POST" action="/auth/set-username">
+          <div class="form-group">
+            <label for="username">Choose your forum username:</label>
+            <input type="text" id="username" name="username" class="form-input" 
+                  value="{{.FormData.username}}" required>
+            <small class="form-hint">This will be your display name on the forum</small>
+          </div>
+
+          <!-- Hidden fields to preserve OAuth data -->
+          <input type="hidden" name="provider" value="{{.Provider}}">
+          <input type="hidden" name="provider_id" value="{{.ProviderID}}">
+          <input type="hidden" name="email" value="{{.Email}}">
+          <input type="hidden" name="name" value="{{.Name}}">
+
+          <button type="submit" class="btn">CREATE ACCOUNT</button>
+        </form>
+
+        <div class="oauth-back">
+          <a href="/login" class="back-link">← Back to login</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__content">
+        <p>Powered by Zone01Athens</p>
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>

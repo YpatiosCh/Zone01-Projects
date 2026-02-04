@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Art Generator</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    <link href="/static/styles/api.css" rel="stylesheet">
+</head>
+<body>
+    <h1>ASCII Art Generator</h1>
+    
+    <!-- Form to submit text and select banner -->
+    <form id="ascii-art-form">
+        <div>
+            <label for="text">Enter Text:</label>
+            <input type="text" id="text" name="text" required>
+        </div>
+        <div>
+            <label for="banner">Choose Banner:</label>
+            <select id="banner" name="banner" required>
+                <option value="standard">Standard</option>
+                <option value="shadow">Shadow</option>
+                <option value="thinkertoy">Thinkertoy</option>
+            </select>
+        </div>
+        <button type="submit">Generate ASCII Art</button>
+    </form>
+
+    <div id="ascii-art-container"></div>
+    
+    <!-- Link to the external JavaScript file -->
+    <script src="/static/scripts/asciiArtAPI.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/static/global.css">
+  <link rel="stylesheet" href="/static/components.css">
+  <link rel="stylesheet" href="/static/breakpoints.css">
+  <script src="/static/actions.js"></script>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <div class="navbar__logo">
+          <a href="/">
+            <img src="/static/files/logo.svg" alt="Logo">
+          </a>
+        </div>
+        <div class="navbar__actions">
+          {{if .User}}
+          <a href="/profile" class="navbar__username">Welcome, {{.User.Username}}</a>
+          <a href="/create-post" class="btn">
+            <img src="/static/files/createPost.svg" alt="Create" class="btn__icon">
+            <span>POST</span>
+          </a>
+          <form action="/logout" method="POST" style="display: inline;">
+            <button type="submit" class="btn">LOG OUT</button>
+          </form>
+          {{else}}
+          <!-- Non-logged in user view -->
+          <a href="/login" class="btn">LOG IN</a>
+          <a href="/signup" class="btn">SIGN UP</a>
+          {{end}}
+        </div>
+      </div>
+    </nav>
+
+
+     {{with .ValidationErr}}
+          {{if .}}
+            <div class="validation-error">
+              {{.}}
+            </div>
+          {{end}}
+        {{end}}
+
+    <!-- Post Detail Section -->
+    <section class="post-detail-section">
+      <div class="post-detail__container">
+        <!-- Post Card -->
+        <div class="post-card--detail">
+          <div class="post-card__header">
+            <div class="post-card__meta">
+              <h4 class="post-card__author">Posted by: {{.SinglePost.Username}}</h4>
+              <span class="post-card__time">Date: {{.SinglePost.CreatedAt.Format "02/01/2006 15:04"}}</span>
+            </div>
+            <div class="post-card__categories">
+              {{range .SinglePost.Categories}}
+              <a href="/categories/{{.ID}}/posts" class="category-tag" style="display: inline">#{{.Name}}</a>
+              {{end}}
+            </div>
+          </div>
+          <div class="post-card__content">
+            <h2 class="post-card__title">{{.SinglePost.Title}}</h2>
+            <p class="post-page__text">{{.SinglePost.Content}}</p>
+          </div>
+          <div class="post-card__metrics">
+  {{if .User}}
+    <!-- Logged in: Show buttons -->
+    <div class="metric">
+      <form action="/post/{{.SinglePost.ID}}/like" method="POST" style="display: inline;">
+        <button type="submit" class="metric_btn">
+          <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+        </button>
+      </form>
+      <span class="metric__count">{{.SinglePost.Likes}}</span>
+    </div>
+    <div class="metric">
+      <form action="/post/{{.SinglePost.ID}}/dislike" method="POST" style="display: inline;">
+        <button type="submit" class="metric_btn">
+          <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+        </button>
+      </form>
+      <span class="metric__count">{{.SinglePost.Dislikes}}</span>
+    </div>
+  {{else}}
+    <!-- Not logged in: Just show counts -->
+    <div class="metric">
+      <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+      <span class="metric__count">{{.SinglePost.Likes}}</span>
+    </div>
+    <div class="metric">
+      <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+      <span class="metric__count">{{.SinglePost.Dislikes}}</span>
+    </div>
+  {{end}}
+</div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comment-form-section">
+          <h3 class="section-title">Comments</h3>
+          </div>
+
+          {{if gt (len .SinglePost.Comments) 0}}
+            {{range .SinglePost.Comments}}
+              <div class="comment-card">
+                <div class="comment-card__header">
+                  <h4 class="comment-card__author">{{.Username}}</h4>
+                  <span class="comment-card__time">{{.CreatedAt.Format "02/01/2006 15:04"}}</span>
+                </div>
+                <div class="comment-card__content">
+                  <p class="comment-card__text">{{.Content}}</p>
+                </div>
+                <div class="post-card__metrics">
+                  {{if $.User}}
+    <!-- Logged in: Show buttons -->
+    <div class="metric">
+      <form action="/comment/{{.ID}}/like" method="POST" style="display: inline;">
+        <button type="submit" class="metric_btn">
+          <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+        </button>
+      </form>
+      <span class="metric__count">{{.Likes}}</span>
+    </div>
+    <div class="metric">
+      <form action="/comment/{{.ID}}/dislike" method="POST" style="display: inline;">
+        <button type="submit" class="metric_btn">
+          <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+        </button>
+      </form>
+      <span class="metric__count">{{.Dislikes}}</span>
+    </div>
+  {{else}}
+    <!-- Not logged in: Just show counts -->
+    <div class="metric">
+      <img src="/static/files/like.svg" alt="Likes" class="metric__icon">
+      <span class="metric__count">{{.Likes}}</span>
+    </div>
+    <div class="metric">
+      <img src="/static/files/dislike.svg" alt="Dislikes" class="metric__icon">
+      <span class="metric__count">{{.Dislikes}}</span>
+    </div>
+  {{end}}
+                </div>
+              </div>
+            {{end}}
+          {{else}}
+          <div class="comment-form-section">
+            <h3 class="section-title">No comments yet.</h3>
+            <div class="comment-form-section">
+          {{end}}
+        </div>
+
+        <!-- Comment Form or Login Prompt -->
+{{if .User}}
+  <div class="comment-form-section">
+    <h3 class="section-title">Add a Comment</h3>
+    <form action="/posts/{{.SinglePost.ID}}/comments" method="POST" class="comment-form">
+      <textarea name="content" class="comment-form__textarea" placeholder="Write your comment here..." required></textarea>
+      <button type="submit" class="btn">SUBMIT</button>
+    </form>
+  </div>
+{{else}}
+<div class="comment-form-section">
+    <h3 class="section-title">Please <a href="/login">log in</a> to comment.</h3>
+    </div>
+{{end}}
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__content">
+        <p>Powered by Zone01Athens</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

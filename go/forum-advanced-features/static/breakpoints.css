@@ -1,0 +1,297 @@
+/* Responsive Design */
+@media (min-width: 1200px) {
+  .categories-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(150px, 1fr);
+    overflow-x: auto;
+    padding-bottom: var(--spacing-md); /* Add padding for scrollbar */
+  }
+  
+  .category-card {
+    min-height: 100px; /* Adjust height for single row */
+  }
+    
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer {
+        height: 80px;
+    }
+  
+    .profile-content__container {
+      grid-template-columns: 1fr;
+    }
+  
+    .profile-sidebar {
+      margin-top: var(--spacing-xl);
+    }
+
+  
+  }
+
+
+  @media (min-width: 900px) {
+    .categories-grid {
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(90px, 1fr);
+      overflow-x: auto;
+      padding-bottom: var(--spacing-md); /* Add padding for scrollbar */
+    }
+
+  }
+@media (max-width: 900px) {
+
+  .category-tag {
+    padding: 2px 4px;  /* Smaller padding */
+    font-size: 0.70rem;  /* Smaller font */
+  }
+
+  .post-card__text {
+    max-height: 1.5em; /* Show 1 line of text */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+}
+
+  @media (max-width: 768px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer {
+        height: 65px;
+    }
+  
+    .hero {
+        padding: var(--spacing-lg) 0;
+      }
+      
+      .hero__title {
+        font-size: var(--font-size-3xl);
+      }
+      
+      .hero__motto {
+        font-size: var(--font-size-md);
+      }
+  
+      .profile-content {
+        padding: var(--spacing-lg) 0;
+      }
+  
+      .btn--icon span {
+        display: none; /* Hide text on mobile, show only icon */
+      }
+      
+      .btn--icon {
+        padding: var(--spacing-sm);
+      }
+
+      .navbar__username {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        margin: auto;
+      }
+      
+      .navbar__username:hover {
+        text-decoration: underline;
+      }
+      
+      .profile-sidebar {
+        width: 100%;
+      }
+      
+      .sidebar-section {
+        margin-bottom: var(--spacing-xl);
+      }
+      
+      .sidebar-section:last-child {
+        margin-bottom: 0;
+      }
+    
+      .category-tag {
+        padding: 2px 4px;  /* Smaller padding */
+        font-size: 0.65rem;  /* Smaller font */
+      }
+      
+      .post-card__categories {
+        gap: 4px;  /* Smaller gap between tags */
+      }
+      .post-card__text {
+        max-height: 3em; /* Show 2 lines of text */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      .comment-form__textarea {
+        min-height: 100px;
+      }
+
+      .posts-section__container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+
+      .post-card {
+        min-height: 180px; /* Keep consistent height */
+        padding: var(--spacing-md)
+      }
+
+      .post-card__text {
+        -webkit-line-clamp: 2;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .post-card__content{
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .post-card__metrics {
+        gap: var(--spacing-xs); /* Even smaller gaps on tablets */
+        padding-top: var(--spacing-xs); /* Reduce top padding */
+       
+      }
+      .post-card--detail {
+        padding: var(--spacing-sm);
+        margin: var(--spacing-xs) 0;
+      }
+      .metric {
+        min-width: 50px; /* Smaller minimum width on tablets */
+      }
+
+      .notifications__actions {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end; /* Keep alignment to the right on mobile */
+      }
+    
+      .notifications__action-btn {
+        width: auto; /* Don't make them full width on mobile */
+      }
+      
+  }
+  
+  
+  @media (max-width: 576px) {
+    .categories-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer {
+        height: 65px;
+    }
+    .hero {
+        display: none; /* This completely removes the hero section on mobile */
+      }
+     .signup-container{
+        padding: var(--spacing-md);
+     } 
+     .signup-section{
+        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
+        margin: 0 var(--spacing-sm); 
+     }
+     .signup-title {
+        font-size: var(--font-size-2xl); /* Smaller title on mobile */
+      }
+    
+      .form-input {
+        height: 36px; /* Slightly smaller input height on mobile */
+      }
+  
+      .login-container {
+        padding: var(--spacing-md);
+        margin: 0 var(--spacing-sm);
+      }
+    
+      .login-title {
+        font-size: var(--font-size-2xl);
+      }
+  
+      .profile-content {
+        padding: var(--spacing-md) 0;
+      }
+  
+      .btn {
+        min-width: 80px;
+        padding: var(--spacing-sm);
+      }
+      .category-tag {
+        padding: 2px 4px;  /* Smaller padding */
+        font-size: 0.70rem;  /* Smaller font */
+      }
+
+      .post-card{
+        min-height: 160px;
+        padding: var(--spacing-sm);
+      }
+      
+      .post-card__categories {
+        gap: 4px;  /* Smaller gap between tags */
+      }
+
+      .post-card__text {
+        -webkit-line-clamp: 2; /* Keep 2 lines on mobile */
+        margin-bottom: var(--spacing-xs);
+
+      }
+
+      .post-card__metrics {
+        gap: var(--spacing-xs); /* Minimal gaps on mobile */
+      }
+
+      .metric {
+        min-width: 40px; /* Smaller minimum width on mobile */
+      }
+
+      .metric__icon {
+        width: 16px; /* Smaller icons on mobile */
+        height: 16px;
+      }
+
+      .metric__count {
+        font-size: var(--font-size-sm);
+      }
+
+      .posts-section__container {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+        display: grid;
+        grid-template-columns: 1fr;  
+      }
+    
+     
+      .metric__icon {
+        width: 16px; /* Smaller icons on mobile */
+        height: 16px;
+      }
+
+      .metric__count {
+        font-size: var(--font-size-sm);
+      }
+
+  }
+  
+  .page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  
+  main {
+    flex: 1; /* This makes the main content take up all available space */
+  }

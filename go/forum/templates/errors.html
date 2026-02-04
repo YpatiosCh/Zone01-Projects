@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/global.css">
+    <link rel="stylesheet" href="/static/components.css">
+    <link rel="stylesheet" href="/static/breakpoints.css">
+
+    <title>Error - Forum 01</title>
+</head>
+<body>
+    <div class="page-wrapper">
+        <main class="error-page-body">
+            <div class="error-card">
+                <h2 class="error-title">Error {{.StatusCode}}</h2>
+                <p class="error-message">{{.Message}}</p>
+                <a href="/" class="btn error-home-button">Return Home</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
