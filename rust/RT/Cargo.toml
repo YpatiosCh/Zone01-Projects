@@ -1,0 +1,30 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/objects",
+    "crates/raycaster",
+    "crates/camera",
+    "crates/lighting",
+    "crates/image",
+    "crates/window",
+    "crates/menu",
+    "crates/world",
+    "crates/scenes",
+    "crates/liveview",
+    "crates/rt",
+]
+
+[workspace.dependencies]
+glam = "0.29"
+rand = "0.8"
+
+[package]
+name = "rt-e2e"
+version = "0.1.0"
+edition = "2021"
+
+[dev-dependencies]
+world  = { path = "crates/world" }
+scenes = { path = "crates/scenes" }
+glam   = { workspace = true }
+rand   = { workspace = true }

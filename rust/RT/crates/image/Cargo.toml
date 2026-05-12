@@ -1,0 +1,8 @@
+[package]
+name = "image"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+image_rs = { package = "image", version = "0.25", default-features = false, features = ["png"] }
+objects = { path = "../objects" }

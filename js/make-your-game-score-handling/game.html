@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2B1810">
+    <meta name="format-detection" content="telephone=no">
+    <title>Arkanoid - 60fps Optimized</title>
+    <link rel="icon" type="image/x-icon" href="/joystick_game_3819.png">
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+    <!-- Player Section - Enter name and start game -->
+    <div id="playerSection">
+        <h1>Arkanoid: "Welcome, Pilot! Your ship is trapped inside the Cosmic Brickfield. <br>
+             Break through the barriers to escape each sector. <br> 
+             Good luck " the galaxy is counting on you!"
+        </h1>
+
+        <!-- Player Name Input - KEYBOARD ONLY -->
+        <div id="playerInput">
+            <label for="playerNameInput">Enter Your Name:</label>
+            <input type="text" id="playerNameInput" placeholder="Player Name" maxlength="20" data-game-input>
+            <div class="keyboard-hint">Press <strong>SPACE</strong> or <strong>ENTER</strong> to start game</div>
+        </div>
+        
+        <!-- Top 5 Highscores Display -->
+        <div id="highscoresSection">
+            <h3>Top 5 Highscores</h3>
+            <div id="highscoresList">
+                <div class="loading-scores">Loading scores...</div>
+            </div>
+        </div>
+
+        <!-- Game Controls Instructions -->
+        <div id="gameControls">
+            <h3>Controls</h3>
+            <div class="controls-grid">
+                <div class="control-item">
+                    <span class="key"> ->  <- </span>
+                    <span class="action">Move Paddle</span>
+                </div>
+                <div class="control-item">
+                    <span class="key">SPACE</span>
+                    <span class="action">Launch Ball / Pause Game</span>
+                </div>
+                <div class="control-item">
+                    <span class="key">ENTER</span>
+                    <span class="action">Continue / Confirm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="gameContainer" style="display: none;">
+        <!-- Floating Title -->
+        <div id="floatingTitle">ARKANOID GAME</div>
+        
+        <!-- HUD - Score, Lives, Level, Time -->
+        <div id="hud">
+            <div id="playername">Player : </div>
+            <div id="score">Score : 0</div>
+            <div id="lives">Lives : 3</div>
+            <div id="level">Level : 1</div>
+            <div id="gameTime">Time : 00:00</div>
+             
+        </div>
+        
+        <!-- Game Area - Optimized for 60fps -->
+        <div id="gameArea" data-gpu-accelerated>
+            <!-- Ball -->
+            <div id="ball"></div>
+            
+            <!-- Paddle -->
+            <div id="paddle"></div>
+            
+            <!-- Bricks Container -->
+            <div id="bricksContainer"></div>
+        </div>
+
+        <!-- Game Messages - UNIFIED MODAL SYSTEM -->
+        <div id="gameMessages">
+            <!-- UNIFIED MODAL - Replaces all separate modals -->
+            <div id="gameModal" style="display: none;">
+                <div class="modal-content">
+                    <h2 id="modalTitle"></h2>
+                    <div id="modalText"></div>
+                    <div id="modalContent"></div>
+                    <div id="modalOptions"></div>
+                    <div id="modalHint"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/physics.js"></script>       
+    <script src="js/levels.js"></script>       
+    <script src="js/game-render.js"></script>  
+    <script src="js/game-input.js"></script>    
+    <script src="js/game-entities.js"></script>  
+    <script src="js/game-api.js"></script>       
+    <script src="js/game-menus.js"></script>
+    <script src="js/game-themes.js"></script>
+    <script src="js/game-core.js"></script>      
+</body>
+</html>

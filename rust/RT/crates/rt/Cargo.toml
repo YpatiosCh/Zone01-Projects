@@ -1,0 +1,14 @@
+[package]
+name = "rt"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "rt"
+path = "src/main.rs"
+
+[dependencies]
+world = { path = "../world" }
+scenes = { path = "../scenes" }
+liveview = { path = "../liveview" }
+menu = { path = "../menu" }

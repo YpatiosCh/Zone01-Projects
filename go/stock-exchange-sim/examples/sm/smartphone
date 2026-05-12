@@ -1,0 +1,15 @@
+# Smartphone production chain
+metal:10
+plastic:5
+battery:5
+circuit:0
+screen:0
+smartphone:0
+#
+make_circuit:(metal:2;plastic:1):(circuit:1):5
+make_screen:(plastic:1;metal:1):(screen:1):8
+assemble_phone:(circuit:1;screen:1;battery:1):(smartphone:1):15
+sell_phone:(smartphone:1):(euro:100):2
+#
+optimize:(euro;time)
+#

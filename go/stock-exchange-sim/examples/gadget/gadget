@@ -1,0 +1,16 @@
+# Producing more gadgets decreases profit
+metal:8
+plastic:10
+fuel:2
+widget:0
+gadget:0
+profit:0
+#
+# make_widget:(metal:2;plastic:1):(widget:1):5
+make_gadget:(metal:1;plastic:2;fuel:1):(gadget:1):6
+# sell_widget:(widget:1):(profit:5):3
+sell_gadget:(gadget:1):(profit:10):5
+refine_fuel:(profit:11):(fuel:2):10
+#
+optimize:(time)
+#

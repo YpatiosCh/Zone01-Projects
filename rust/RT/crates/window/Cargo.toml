@@ -1,0 +1,15 @@
+[package]
+name = "window"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+font8x8 = "0.3"
+minifb = "0.27"
+raw-window-handle = "0.6"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.59", features = ["Win32_Foundation", "Win32_Graphics_Gdi", "Win32_UI_WindowsAndMessaging"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+x11-dl = "2.21"

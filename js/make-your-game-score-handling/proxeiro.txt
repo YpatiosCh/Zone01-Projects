@@ -1,0 +1,4 @@
+pagination url :
+
+
+http://localhost:8080/api/scores?page=1

@@ -1,0 +1,15 @@
+board:7    # should pass
+
+BOARD:7    # should pass
+
+board:a4   # should not pass
+
+:7         # should not pass
+
+board:     # should not pass
+
+123:7      # SHOULD PASS? for now it will NOT pass (ask the team)
+
+board: 5   # SHOULD PASS? format in description says <stock_name>:<quantity> for now it will NOT pass (ask the team)
+
+board :5   # SAME HERE

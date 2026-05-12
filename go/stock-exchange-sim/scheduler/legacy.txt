@@ -1,0 +1,93 @@
+
+
+```go
+// Returns a sorted list of map keys of the recources needed by the process p by ascending resource.Out.
+func (s *scheduler) sortNeededResources(p *domain.Process) {
+	resourceRatios := make(map[string]int)
+	for resource, quantity := range p.In {
+		producingProc, err := s.findProcessByOutput(resource)
+		if err == nil {
+			times := producingProc.Out[resource] / quantity
+			resourceRatios[resource] = times
+		} else { //resources only from stock
+			resourceRatios[resource] = 0
+		}
+	}
+	// Create a slice of resources from the resourceRatios map
+	neededResourcesSorted := make([]string, 0, len(resourceRatios))
+	for resource := range resourceRatios {
+		neededResourcesSorted = append(neededResourcesSorted, resource)
+	}
+
+	// Sort resources by their corresponding values
+	sort.Slice(neededResourcesSorted, func(i, j int) bool {
+		return resourceRatios[neededResourcesSorted[i]] < resourceRatios[neededResourcesSorted[j]] // descending order
+	})
+
+	p.NeededResourcesSorted = neededResourcesSorted
+}
+
+func (s *scheduler) prepareProcesses() {
+	for i := range s.processes {
+		s.sortNeededResources(&s.processes[i])
+	}
+	s.sortNeededResources(&s.entryProc)
+}
+
+func (s *scheduler) findShortestProcess() int {
+	var least int
+	for _, p := range s.processes {
+		if p.Cycles < least {
+			least = p.Cycles
+		}
+	}
+	return least
+}
+
+func deepCopyLogs(source []domain.Log) []domain.Log {
+	if source == nil {
+		return nil
+	}
+	dest := make([]domain.Log, len(source))
+	copy(dest, source)
+	return dest
+}
+
+// removes from log processes that don't result in an entryProc
+// TODO: Reverse run the removed processes to re emberse stock and check if "no more process doable" needs to be changed.
+func (s *serial) removeRedundantProcesses(parent domain.Process) (lastCycle int, err error) {
+	var lastUsefullLogIndex int
+
+	for i := len(s.log) - 1; i >= 0; i-- {
+		log := s.log[i]
+		if log.ProcName == "" {
+			continue
+		}
+
+		if log.ProcName == parent.Name {
+			lastCycle = log.Cycle + parent.Cycles
+			lastUsefullLogIndex = i
+			break
+		}
+	}
+
+	var removedLogEntries []domain.Log
+	removedLogEntries = append(removedLogEntries, s.log[lastUsefullLogIndex+1:]...)
+
+	for _, logEntry := range removedLogEntries {
+		pName := logEntry.ProcName
+		if pName == "" {
+			continue
+		}
+
+		process, err := findProcessByName(pName, s.allProcesses)
+		if err != nil {
+			return lastCycle, errors.Join(ErrRemoveRedundantProcs, err)
+		}
+		restoreStock(process, s.stock)
+	}
+
+	s.log = s.log[:lastUsefullLogIndex+1]
+	return lastCycle, nil
+}
+```

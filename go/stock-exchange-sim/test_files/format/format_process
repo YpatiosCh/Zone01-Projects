@@ -1,0 +1,11 @@
+hello:(hawk:1;tuah:2):(yolo:4):14             # should PASS
+
+hello:(hawk:1;tuah:2):(yolo:4;yasu:5):14      # should PASS
+
+hello:(hawk:1):(yolo:4):14                    # should PASS
+
+hello:(hawk:1;tuah:2):(yolo:4):               # should NOT PASS
+
+hello:(hawk:1:tuah'2):(yolo:4;):14            # should NOT PASS
+
+:(hawk:1;tuah:2):(yolo:4):14                  # should NOT PASS

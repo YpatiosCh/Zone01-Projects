@@ -1,0 +1,10 @@
+# macOs
+.DS_Store
+
+# debug files
+.vscode
+*.bin
+*.exe
+__debug_bin*
+
+*.log

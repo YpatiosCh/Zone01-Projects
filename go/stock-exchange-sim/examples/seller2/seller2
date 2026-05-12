@@ -1,0 +1,11 @@
+repos:100
+time:10
+transport:0
+skills:0
+fame:0
+euro:1
+code:(repos:90):(skills:1):10
+optimize_profile:(repos:10):(fame:20):1
+repoMaker:(time:1):(repos:20):10
+sell_skills:(skills:1;fame:10;repos:1):(euro:100):10
+optimize:(euro;time)

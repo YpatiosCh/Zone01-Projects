@@ -1,0 +1,11 @@
+[package]
+name = "camera"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+glam = { workspace = true }
+objects = { path = "../objects" }
+
+[dev-dependencies]
+raycaster = { path = "../raycaster" }

@@ -1,0 +1,63 @@
+% go run . input/robot  
+Running input/robot
+Optimizing [euro]
+Optimizing for time: true
+Running pipeline
+Serial complete
+Running time optimization
+Main Processes:
+  0: make_body
+  0: make_wheel
+  5: make_wheel
+  10: make_wheel
+  10: make_wheel
+  15: assemble_car
+  15: make_wheel
+  20: make_wheel
+  25: make_wheel
+  30: make_wheel
+  35: ship_car
+  35: make_body
+  45: assemble_car
+  65: ship_car
+No more process doable at cycle 71
+Stock:
+  robot => 2
+  wheel => 0
+  body => 0
+  car => 0
+  euro => 1000
+  steel => 6
+  plastic => 2
+
+% go run . input/robot
+Running input/robot
+Optimizing [euro]
+Optimizing for time: true
+Running pipeline
+Serial complete
+Running time optimization
+Main Processes:
+  0: make_body
+  0: make_wheel
+  5: make_wheel
+  10: make_wheel
+  10: make_wheel
+  15: assemble_car
+  15: make_body
+  25: make_wheel
+  30: make_wheel
+  35: ship_car
+  35: make_wheel
+  35: make_wheel
+  40: assemble_car
+  60: ship_car
+No more process doable at cycle 66
+Stock:
+  wheel => 0
+  body => 0
+  car => 0
+  euro => 1000
+  steel => 6
+  plastic => 2
+  robot => 2

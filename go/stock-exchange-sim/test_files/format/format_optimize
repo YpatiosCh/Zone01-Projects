@@ -1,0 +1,7 @@
+optimize:(time;cabinet) # should PASS
+
+optimize:(happiness)    # should PASS
+
+optimize:(client_content;time)  # should PASS
+ 
+optimize:time;cabinet  # should NOT PASS

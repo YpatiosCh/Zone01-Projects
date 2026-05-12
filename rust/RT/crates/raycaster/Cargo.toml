@@ -1,0 +1,8 @@
+[package]
+name = "raycaster"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+objects = { path = "../objects" }
+glam = { workspace = true }

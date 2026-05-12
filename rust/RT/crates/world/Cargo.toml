@@ -1,0 +1,12 @@
+[package]
+name = "world"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+glam = { workspace = true }
+objects = { path = "../objects" }
+raycaster = { path = "../raycaster" }
+camera = { path = "../camera" }
+lighting = { path = "../lighting" }
+image = { path = "../image" }

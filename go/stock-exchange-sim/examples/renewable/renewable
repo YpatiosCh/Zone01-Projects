@@ -1,0 +1,14 @@
+# Energy production with renewable cycle
+coal:5
+water:10
+steam:0
+electricity:0
+money:0
+#
+boil_water:(coal:1;water:1):(steam:2):3
+generate_power:(steam:2):(electricity:5):5
+sell_power:(electricity:5):(money:10;water:2):2
+mine_coal:(money:10):(coal:2):10
+#
+optimize:(money)
+#
